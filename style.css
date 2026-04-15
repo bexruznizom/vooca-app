@@ -1,42 +1,21 @@
-:root {
-    --neon-blue: #00f2ff;
-    --neon-pink: #ff00ff;
-    --neon-yellow: #fff200;
-    --bg-dark: #020617; /* To'q ko'k-qora fon */
-}
-
 body {
-    background: var(--bg-dark);
+    background: #020617;
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
     margin: 0;
     height: 100vh;
     display: flex;
     justify-content: center;
     overflow: hidden;
-    position: relative;
 }
 
-/* Orqa fondagi xira neon dog'lar (Aura) */
-body::before, body::after {
-    content: "";
+/* Orqa fondagi xira effekt */
+.bg-aura {
     position: absolute;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    filter: blur(80px); /* Maksimal xiralashtirish */
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 30%, #1e293b 0%, #020617 100%);
     z-index: -1;
-    opacity: 0.15; /* Ko'zga tashlanarli, lekin xalaqit bermaydi */
-}
-
-body::before {
-    top: -50px;
-    left: -50px;
-    background: var(--neon-blue);
-}
-
-body::after {
-    bottom: -50px;
-    right: -50px;
-    background: var(--neon-pink);
 }
 
 .app-container {
@@ -45,38 +24,84 @@ body::after {
     padding: 20px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    /* Glassmorphism effekti app konteyneri uchun */
-    background: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(10px); 
-    border-left: 1px solid rgba(255, 255, 255, 0.05);
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Kartochka dizaynini biroz shaffofroq qilish */
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.motivation {
+    font-family: 'Orbitron', sans-serif;
+    color: #00f2ff;
+    font-size: 12px;
+    text-shadow: 0 0 10px #00f2ff;
+}
+
+.stat { background: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 15px; font-weight: bold; }
+
+/* Karta dizayni */
+.card-area {
+    width: 300px;
+    height: 400px;
+    perspective: 1000px;
+}
+
+.main-card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.main-card.is-flipped { transform: rotateY(180deg); }
+
 .side {
     position: absolute;
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
-    border-radius: 35px;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.03); /* Juda yupqa shisha */
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(20px); /* Kartochka ichidagi blur */
+    align-items: center;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(0, 242, 255, 0.3);
 }
 
-.front {
-    border: 2px solid var(--neon-blue);
-    box-shadow: 0 0 40px rgba(0, 242, 255, 0.1);
+.front { border-color: #00f2ff; box-shadow: 0 0 30px rgba(0, 242, 255, 0.2); }
+.back { transform: rotateY(180deg); border-color: #ff00ff; box-shadow: 0 0 30px rgba(255, 0, 255, 0.2); }
+
+.tag { font-size: 10px; letter-spacing: 2px; opacity: 0.6; position: absolute; top: 30px; }
+h1 { font-family: 'Orbitron', sans-serif; font-size: 28px; margin: 0; color: #fff; text-align: center; }
+.hint { font-size: 12px; opacity: 0.4; position: absolute; bottom: 30px; }
+
+/* Tugmalar */
+.button-container {
+    width: 100%;
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
-.back {
-    transform: rotateY(180deg);
-    border: 2px solid var(--neon-pink);
-    box-shadow: 0 0 40px rgba(255, 0, 255, 0.1);
+.btn {
+    flex: 1;
+    padding: 18px;
+    border: none;
+    border-radius: 20px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: bold;
+    color: white;
+    transition: 0.3s;
 }
 
-/* Boshqa elementlar o'zgarishsiz qoladi */
+.btn-red { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); }
+.btn-green { background: linear-gradient(45deg, #00f2ff, #0072ff); box-shadow: 0 10px 20px rgba(0, 242, 255, 0.3); }

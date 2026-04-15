@@ -1,25 +1,15 @@
 let tg = window.Telegram.WebApp;
 tg.expand();
-tg.enableClosingConfirmation();
 
-// Bekhruz uchun maxsus motivatsiyalar
-const motivationQuotes = [
-    "Dahshatli natija! 🔥",
-    "To'xtamang, Bekhruz!",
-    "Miya charxlanmoqda... 🧠",
-    "Siz eng zo'risiz!",
-    "Yangi cho'qqi sari! ✨"
+const words = [
+    {en: "Consistency", uz: "Izchillik"},
+    {en: "Ambition", uz: "Intilish"},
+    {en: "Experience", uz: "Tajriba"},
+    {en: "Success", uz: "Muvaffaqiyat"},
+    {en: "Discipline", uz: "Intizom"}
 ];
 
-const vocabulary = [
-    {en: "Persistence", uz: "Qat'iyat"},
-    {en: "Mindset", uz: "Fikrlash tarzi"},
-    {en: "Efficiency", uz: "Samaradorlik"},
-    {en: "Knowledge", uz: "Bilim"},
-    {en: "Success", uz: "Muvaffaqiyat"}
-];
-
-let currentIndex = 0;
+let index = 0;
 let points = 0;
 
 function flipCard() {
@@ -27,34 +17,22 @@ function flipCard() {
     document.getElementById('card').classList.toggle('is-flipped');
 }
 
-function handleAction(isCorrect) {
-    if(isCorrect) {
-        points += 15;
+function handleAction(known) {
+    if(known) {
+        points += 10;
         document.getElementById('score').innerText = points;
-        
-        // Motivatsiyani o'zgartirish
-        const quote = motivationQuotes[Math.floor(Math.random() * motivationQuotes.length)];
-        const motEl = document.getElementById('motivation');
-        motEl.innerText = quote;
-        
         tg.HapticFeedback.notificationOccurred('success');
-    } else {
-        tg.HapticFeedback.notificationOccurred('warning');
     }
 
-    // Keyingi so'zga o'tish
-    currentIndex = (currentIndex + 1) % vocabulary.length;
-    
-    // Progress bar
-    let progress = ((currentIndex + 1) / vocabulary.length) * 100;
-    document.getElementById('progress').style.width = progress + "%";
+    index = (index + 1) % words.length;
+    document.getElementById('progress-text').innerText = `${index + 1}/${words.length}`;
 
-    // Kartani asliga qaytarish va so'zni yangilash
-    const card = document.getElementById('card');
-    card.classList.remove('is-flipped');
+    // Kartani joyiga qaytarish
+    document.getElementById('card').classList.remove('is-flipped');
 
+    // So'zni biroz kechikish bilan almashtirish (animatsiya uchun)
     setTimeout(() => {
-        document.getElementById('word').innerText = vocabulary[currentIndex].en;
-        document.getElementById('translation').innerText = vocabulary[currentIndex].uz;
-    }, 250);
+        document.getElementById('word').innerText = words[index].en;
+        document.getElementById('translation').innerText = words[index].uz;
+    }, 200);
 }

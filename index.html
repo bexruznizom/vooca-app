@@ -2,42 +2,58 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vooca - Premium</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Til O'rganish Ilovasi</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="bg-aura"></div>
     <div class="app-container">
-        
-        <div class="header">
-            <div class="stat">⭐ <span id="score">0</span></div>
-            <div class="motivation" id="motivation">Olg'a, Bekhruz!</div>
-            <div class="stat">📚 <span id="progress-text">1/5</span></div>
-        </div>
+        <header class="header">
+            <div class="progress-box">
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <span class="lesson-title">Lesson 1: Basics</span>
+            </div>
+            <div class="profile-box">
+                <div class="avatar-neon">A</div>
+                <div class="user-info">
+                    <span class="username">User123</span>
+                    <span class="xp">450XP</span>
+                </div>
+            </div>
+        </header>
 
-        <div class="card-area" onclick="flipCard()">
-            <div class="main-card" id="card">
-                <div class="side front">
-                    <span class="tag">ENGLISH</span>
-                    <h1 id="word">Consistency</h1>
-                    <p class="hint">Tarjimani ko'rish uchun bosing</p>
-                </div>
-                <div class="side back">
-                    <span class="tag">UZBEK</span>
-                    <h1 id="translation">Izchillik</h1>
-                </div>
+        <main class="card-display">
+            <div class="card neon-yellow">
+                <span class="card-text">A-Z</span>
+            </div>
+            <div class="card neon-pink front-card">
+                <span class="star-icon">★</span>
+            </div>
+            <div class="card neon-cyan">
+                <span class="card-text">A</span>
             </div>
         </div>
 
-        <div class="button-container">
-            <button class="btn btn-red" onclick="handleAction(false)">Bilmiman</button>
-            <button class="btn btn-green" onclick="handleAction(true)">Bilaman</button>
+        <div class="vooca-platform">
+            <div class="platform-surface">VOOCA</div>
         </div>
 
+        <nav class="nav-bar">
+            <a href="#" class="nav-item neon-green active">
+                <div class="icon">📖</div>
+                <span>Practice</span>
+            </a>
+            <a href="#" class="nav-item neon-pink">
+                <div class="icon">📊</div>
+                <span>Stats</span>
+            </a>
+            <a href="#" class="nav-item neon-cyan">
+                <div class="icon">👤</div>
+                <span>Profile</span>
+            </a>
+        </nav>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>

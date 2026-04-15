@@ -1,132 +1,82 @@
 :root {
-    --primary: #00f2ff;
-    --secondary: #ff00ff;
-    --bg: #050505;
-    --card-bg: #121212;
+    --neon-blue: #00f2ff;
+    --neon-pink: #ff00ff;
+    --neon-yellow: #fff200;
+    --bg-dark: #020617; /* To'q ko'k-qora fon */
 }
 
 body {
-    background-color: var(--bg);
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg-dark);
     margin: 0;
     height: 100vh;
     display: flex;
     justify-content: center;
     overflow: hidden;
+    position: relative;
+}
+
+/* Orqa fondagi xira neon dog'lar (Aura) */
+body::before, body::after {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    filter: blur(80px); /* Maksimal xiralashtirish */
+    z-index: -1;
+    opacity: 0.15; /* Ko'zga tashlanarli, lekin xalaqit bermaydi */
+}
+
+body::before {
+    top: -50px;
+    left: -50px;
+    background: var(--neon-blue);
+}
+
+body::after {
+    bottom: -50px;
+    right: -50px;
+    background: var(--neon-pink);
 }
 
 .app-container {
     width: 100%;
-    max-width: 420px;
+    max-width: 400px;
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* Glassmorphism effekti app konteyneri uchun */
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(10px); 
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Progress Bar */
-.progress-container {
-    width: 100%;
-    height: 6px;
-    background: #222;
-    border-radius: 3px;
-    margin-bottom: 20px;
-}
-.progress-bar {
-    width: 10%;
-    height: 100%;
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
-    border-radius: 3px;
-    transition: width 0.4s ease;
-}
-
-.header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 30px;
-}
-
-.stat-box {
-    background: #1a1a1a;
-    padding: 8px 15px;
-    border-radius: 12px;
-    border: 1px solid #333;
-    font-weight: bold;
-}
-
-/* Card System */
-.card-wrapper {
-    width: 300px;
-    height: 400px;
-    perspective: 1000px;
-    margin-bottom: 40px;
-}
-
-.main-card {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.main-card.is-flipped { transform: rotateY(180deg); }
-
-.face {
+/* Kartochka dizaynini biroz shaffofroq qilish */
+.side {
     position: absolute;
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
+    border-radius: 35px;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    border-radius: 40px;
-    background: var(--card-bg);
-    border: 2px solid #222;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.03); /* Juda yupqa shisha */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px); /* Kartochka ichidagi blur */
 }
 
 .front {
-    border-color: var(--primary);
-    box-shadow: 0 0 20px rgba(0, 242, 255, 0.1);
+    border: 2px solid var(--neon-blue);
+    box-shadow: 0 0 40px rgba(0, 242, 255, 0.1);
 }
 
 .back {
     transform: rotateY(180deg);
-    border-color: var(--secondary);
-    color: var(--secondary);
+    border: 2px solid var(--neon-pink);
+    box-shadow: 0 0 40px rgba(255, 0, 255, 0.1);
 }
 
-.tap-hint {
-    font-size: 12px;
-    opacity: 0.5;
-    margin-top: 20px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-/* Buttons */
-.action-buttons {
-    display: flex;
-    gap: 15px;
-    width: 100%;
-}
-
-.btn {
-    flex: 1;
-    padding: 20px;
-    border: none;
-    border-radius: 24px;
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
-    cursor: pointer;
-    transition: transform 0.1s active;
-}
-
-.btn:active { transform: scale(0.95); }
-
-.btn-fail { background: #1a1a1a; border: 1px solid #333; }
-.btn-success { background: linear-gradient(135deg, #00f2ff, #0072ff); box-shadow: 0 10px 20px rgba(0, 114, 255, 0.3); }
+/* Boshqa elementlar o'zgarishsiz qoladi */

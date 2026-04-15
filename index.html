@@ -3,51 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vooca - Premium Edition</title>
+    <title>Vooca - Premium</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="aura aura-1"></div>
-    <div class="aura aura-2"></div>
-
+    <div class="bg-aura"></div>
     <div class="app-container">
-        <div class="top-bar">
-            <div class="progress-section">
-                <span class="label">DARAXT</span>
-                <div class="bar-track">
-                    <div class="bar-fill" id="progress"></div>
-                </div>
-            </div>
-            <div class="score-pill">
-                <span id="score">0</span> 💎
-            </div>
+        
+        <div class="header">
+            <div class="stat">⭐ <span id="score">0</span></div>
+            <div class="motivation" id="motivation">Olg'a, Bekhruz!</div>
+            <div class="stat">📚 <span id="progress-text">1/5</span></div>
         </div>
 
-        <div class="hero-section">
-            <p id="motivation" class="fade-in">Olg'a qadam tashlang!</p>
-        </div>
-
-        <div class="flashcard-box" onclick="flipCard()">
-            <div class="card-inner" id="card">
-                <div class="card-side card-front">
-                    <div class="glass-overlay"></div>
-                    <span class="mini-text">INGLIZCHA</span>
-                    <h1 id="word">Discipline</h1>
+        <div class="card-area" onclick="flipCard()">
+            <div class="main-card" id="card">
+                <div class="side front">
+                    <span class="tag">ENGLISH</span>
+                    <h1 id="word">Consistency</h1>
+                    <p class="hint">Tarjimani ko'rish uchun bosing</p>
                 </div>
-                <div class="card-side card-back">
-                    <div class="glass-overlay"></div>
-                    <span class="mini-text">O'ZBEKCHA</span>
-                    <h1 id="translation">Intizom</h1>
+                <div class="side back">
+                    <span class="tag">UZBEK</span>
+                    <h1 id="translation">Izchillik</h1>
                 </div>
             </div>
         </div>
 
-        <div class="button-group">
-            <button class="btn btn-secondary" onclick="handleAction(false)">Bilmiman</button>
-            <button class="btn btn-primary" onclick="handleAction(true)">Bilaman</button>
+        <div class="button-container">
+            <button class="btn btn-red" onclick="handleAction(false)">Bilmiman</button>
+            <button class="btn btn-green" onclick="handleAction(true)">Bilaman</button>
         </div>
+
     </div>
     <script src="script.js"></script>
 </body>

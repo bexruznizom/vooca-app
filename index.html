@@ -1,20 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>VoocaBot Mini App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h2 id="word">Apple</h2>
-        <p id="hint">Tarjimani ko'rish uchun bosing</p>
-        <div class="card" onclick="flipCard()">
-            <div id="translation" style="display:none;">Olma</div>
+    <div class="app-container">
+        <div class="progress-container">
+            <div class="progress-bar" id="progress"></div>
         </div>
-        <div class="buttons">
-            <button onclick="next()">Keyingisi ➡️</button>
+
+        <div class="header">
+            <div class="stat-box">⭐ <span id="score">0</span></div>
+            <div class="stat-box">📚 <span id="word-count">1/10</span></div>
+        </div>
+
+        <div class="card-wrapper" onclick="flipCard()">
+            <div class="main-card" id="card">
+                <div class="face front">
+                    <div class="glow-effect"></div>
+                    <h1 id="word">Consistency</h1>
+                    <span class="tap-hint">Tarjimani ko'rish</span>
+                </div>
+                <div class="face back">
+                    <h1 id="translation">Izchillik</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn btn-fail" onclick="handleAction(false)">Bilmiman</button>
+            <button class="btn btn-success" onclick="handleAction(true)">Bilaman</button>
         </div>
     </div>
     <script src="script.js"></script>

@@ -3,37 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VoocaBot Mini App</title>
+    <title>Vooca - Premium Edition</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="aura aura-1"></div>
+    <div class="aura aura-2"></div>
+
     <div class="app-container">
-        <div class="progress-container">
-            <div class="progress-bar" id="progress"></div>
-        </div>
-
-        <div class="header">
-            <div class="stat-box">⭐ <span id="score">0</span></div>
-            <div class="stat-box">📚 <span id="word-count">1/10</span></div>
-        </div>
-
-        <div class="card-wrapper" onclick="flipCard()">
-            <div class="main-card" id="card">
-                <div class="face front">
-                    <div class="glow-effect"></div>
-                    <h1 id="word">Consistency</h1>
-                    <span class="tap-hint">Tarjimani ko'rish</span>
+        <div class="top-bar">
+            <div class="progress-section">
+                <span class="label">DARAXT</span>
+                <div class="bar-track">
+                    <div class="bar-fill" id="progress"></div>
                 </div>
-                <div class="face back">
-                    <h1 id="translation">Izchillik</h1>
+            </div>
+            <div class="score-pill">
+                <span id="score">0</span> 💎
+            </div>
+        </div>
+
+        <div class="hero-section">
+            <p id="motivation" class="fade-in">Olg'a qadam tashlang!</p>
+        </div>
+
+        <div class="flashcard-box" onclick="flipCard()">
+            <div class="card-inner" id="card">
+                <div class="card-side card-front">
+                    <div class="glass-overlay"></div>
+                    <span class="mini-text">INGLIZCHA</span>
+                    <h1 id="word">Discipline</h1>
+                </div>
+                <div class="card-side card-back">
+                    <div class="glass-overlay"></div>
+                    <span class="mini-text">O'ZBEKCHA</span>
+                    <h1 id="translation">Intizom</h1>
                 </div>
             </div>
         </div>
 
-        <div class="action-buttons">
-            <button class="btn btn-fail" onclick="handleAction(false)">Bilmiman</button>
-            <button class="btn btn-success" onclick="handleAction(true)">Bilaman</button>
+        <div class="button-group">
+            <button class="btn btn-secondary" onclick="handleAction(false)">Bilmiman</button>
+            <button class="btn btn-primary" onclick="handleAction(true)">Bilaman</button>
         </div>
     </div>
     <script src="script.js"></script>

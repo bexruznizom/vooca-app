@@ -2,54 +2,59 @@ let tg = window.Telegram.WebApp;
 tg.expand();
 tg.enableClosingConfirmation();
 
-const words = [
-    {en: "Consistency", uz: "Izchillik"},
-    {en: "Ability", uz: "Qobiliyat"},
-    {en: "Experience", uz: "Tajriba"},
-    {en: "Goal", uz: "Maqsad"},
-    {en: "Discipline", uz: "Intizom"},
-    {en: "Success", uz: "Muvaffaqiyat"},
+// Bekhruz uchun maxsus motivatsiyalar
+const motivationQuotes = [
+    "Dahshatli natija! 🔥",
+    "To'xtamang, Bekhruz!",
+    "Miya charxlanmoqda... 🧠",
+    "Siz eng zo'risiz!",
+    "Yangi cho'qqi sari! ✨"
+];
+
+const vocabulary = [
+    {en: "Persistence", uz: "Qat'iyat"},
+    {en: "Mindset", uz: "Fikrlash tarzi"},
+    {en: "Efficiency", uz: "Samaradorlik"},
     {en: "Knowledge", uz: "Bilim"},
-    {en: "Health", uz: "Sog'liq"},
-    {en: "Future", uz: "Kelajak"},
-    {en: "Mindset", uz: "Fikrlash tarzi"}
+    {en: "Success", uz: "Muvaffaqiyat"}
 ];
 
 let currentIndex = 0;
-let score = 0;
+let points = 0;
 
 function flipCard() {
-    tg.HapticFeedback.impactOccurred('light');
+    tg.HapticFeedback.impactOccurred('medium');
     document.getElementById('card').classList.toggle('is-flipped');
 }
 
-function handleAction(isKnown) {
-    tg.HapticFeedback.notificationOccurred(isKnown ? 'success' : 'warning');
-    
-    if(isKnown) {
-        score += 10;
-        document.getElementById('score').innerText = score;
+function handleAction(isCorrect) {
+    if(isCorrect) {
+        points += 15;
+        document.getElementById('score').innerText = points;
+        
+        // Motivatsiyani o'zgartirish
+        const quote = motivationQuotes[Math.floor(Math.random() * motivationQuotes.length)];
+        const motEl = document.getElementById('motivation');
+        motEl.innerText = quote;
+        
+        tg.HapticFeedback.notificationOccurred('success');
+    } else {
+        tg.HapticFeedback.notificationOccurred('warning');
     }
 
-    // Progress update
-    currentIndex++;
-    if(currentIndex >= words.length) {
-        currentIndex = 0;
-        alert("Tabriklaymiz! Barcha so'zlarni tugatdingiz.");
-    }
-
-    const progressPercent = ((currentIndex + 1) / words.length) * 100;
-    document.getElementById('progress').style.width = `${progressPercent}%`;
-    document.getElementById('word-count').innerText = `${currentIndex + 1}/${words.length}`;
-
-    // Reset card
-    document.getElementById('card').classList.remove('is-flipped');
+    // Keyingi so'zga o'tish
+    currentIndex = (currentIndex + 1) % vocabulary.length;
     
+    // Progress bar
+    let progress = ((currentIndex + 1) / vocabulary.length) * 100;
+    document.getElementById('progress').style.width = progress + "%";
+
+    // Kartani asliga qaytarish va so'zni yangilash
+    const card = document.getElementById('card');
+    card.classList.remove('is-flipped');
+
     setTimeout(() => {
-        document.getElementById('word').innerText = words[currentIndex].en;
-        document.getElementById('translation').innerText = words[currentIndex].uz;
-    }, 200);
+        document.getElementById('word').innerText = vocabulary[currentIndex].en;
+        document.getElementById('translation').innerText = vocabulary[currentIndex].uz;
+    }, 250);
 }
-
-// Initial setup
-document.getElementById('word-count').innerText = `1/${words.length}`;

@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vooca App</title>
+    <title>Vooca Pro - Learning Redefined</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -13,35 +15,55 @@
     <div class="app-container">
         
         <div class="top-nav">
-            <div class="xp-badge">✨ <span id="xp">450</span> XP</div>
-            <div class="level">Lesson 1: Basics</div>
+            <div class="xp-group">
+                <div class="xp-badge">✨ <span id="xp">450</span></div>
+                <div class="streak">🔥 3 kun</div>
+            </div>
+            <div class="level-info">
+                <span class="level-label">RANK: LEARNER</span>
+                <div class="mini-progress"><div class="mini-fill" style="width: 60%"></div></div>
+            </div>
+        </div>
+
+        <div class="motivation-area">
+            <h2 id="motivation" class="fade-in">Olg'a, Bekhruz!</h2>
         </div>
 
         <div class="main-content">
-            <div class="flashcard" onclick="flipCard()">
-                <div class="card-inner" id="card">
-                    <div class="card-front">
-                        <span class="label">ENGLISH</span>
+            <div class="flashcard" id="tilt-card">
+                <div class="card-inner" id="card" onclick="flipCard()">
+                    <div class="card-side card-front">
+                        <div class="glass-layer"></div>
+                        <div class="card-header">
+                            <span class="tag">ENGLISH</span>
+                            <button class="audio-btn" onclick="speakWord(event)"><i class="fas fa-volume-up"></i></button>
+                        </div>
                         <h1 id="word">Consistency</h1>
-                        <p class="tap-hint">Tarjimani ko'rish uchun bosing</p>
+                        <p class="hint">Aylantirish uchun bosing</p>
                     </div>
-                    <div class="card-back">
-                        <span class="label">UZBEK</span>
+                    <div class="card-side card-back">
+                        <div class="glass-layer"></div>
+                        <span class="tag">UZBEK</span>
                         <h1 id="translation">Izchillik</h1>
+                        <p class="hint">Orqaga qaytish</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="actions">
-            <button class="btn btn-skip" onclick="nextWord(false)">Bilmiman</button>
-            <button class="btn btn-know" onclick="nextWord(true)">Bilaman</button>
+            <button class="btn btn-skip" onclick="handleResponse(false)">
+                <i class="fas fa-xmark"></i> Bilmiman
+            </button>
+            <button class="btn btn-know" onclick="handleResponse(true)">
+                <i class="fas fa-check"></i> Bilaman
+            </button>
         </div>
 
         <nav class="bottom-menu">
-            <div class="nav-item active">📖<span>Practice</span></div>
-            <div class="nav-item">📊<span>Stats</span></div>
-            <div class="nav-item">👤<span>Profile</span></div>
+            <div class="nav-item active"><i class="fas fa-book-open"></i><span>Dars</span></div>
+            <div class="nav-item"><i class="fas fa-chart-pie"></i><span>Stat</span></div>
+            <div class="nav-item"><i class="fas fa-user-astronaut"></i><span>Profil</span></div>
         </nav>
     </div>
     <script src="script.js"></script>

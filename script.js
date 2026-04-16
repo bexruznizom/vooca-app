@@ -1,93 +1,72 @@
-// Telegram WebApp interfeysini kengaytirish
 let tg = window.Telegram.WebApp;
 tg.expand();
 
-// Bekhruz uchun maxsus motivatsiya matnlari
-const quotes = [
-    "Dahshatli natija! 🔥",
-    "To'xtamang, Bekhruz!",
-    "Miya charxlanmoqda... 🧠",
-    "Siz eng zo'risiz!",
-    "Yangi cho'qqi sari! ✨"
-];
-
-// O'rganish uchun so'zlar ro'yxati (Buni keyinchalik bazadan olishingiz mumkin)
 const words = [
     { en: "Consistency", uz: "Izchillik" },
-    { en: "Ambition", uz: "Intilish" },
-    { en: "Experience", uz: "Tajriba" },
-    { en: "Success", uz: "Muvaffaqiyat" },
-    { en: "Discipline", uz: "Intizom" }
+    { en: "Persistence", uz: "Qat'iyat" },
+    { en: "Mindset", uz: "Fikrlash tarzi" },
+    { en: "Efficiency", uz: "Samaradorlik" },
+    { en: "Ambition", uz: "Intilish" }
 ];
 
-let currentIndex = 0;
-let points = 450; // Rasmdagi boshlang'ich XP qiymati
+let idx = 0;
+let xp = 450;
 
-// Kartani aylantirish funksiyasi
-function flipCard() {
-    // Telefon titrashi (Haptic Feedback) - interaktivlikni oshiradi
-    tg.HapticFeedback.impactOccurred('medium'); 
-    const card = document.getElementById('card');
-    card.classList.toggle('is-flipped');
+// 1. Audio funksiyasi (Text-to-Speech)
+function speakWord(event) {
+    event.stopPropagation(); // Kartani aylanib ketishidan saqlaydi
+    const msg = new SpeechSynthesisUtterance(words[idx].en);
+    msg.lang = 'en-US';
+    msg.rate = 0.8;
+    window.speechSynthesis.speak(msg);
+    tg.HapticFeedback.impactOccurred('light');
 }
 
-// Keyingi so'zga o'tish mantiqi
-function nextWord(isKnown) {
+// 2. 3D Tilt (Egilish) effekti
+const cardWrapper = document.getElementById('tilt-card');
+cardWrapper.addEventListener('mousemove', (e) => {
+    const { offsetWidth: width, offsetHeight: height } = cardWrapper;
+    const { offsetX: x, offsetY: y } = e;
+    const xRotation = ((y - height / 2) / height) * 20;
+    const yRotation = ((x - width / 2) / width) * -20;
+    cardWrapper.style.transform = `rotateX(${xRotation}deg) rotateY(${yRotation}deg)`;
+});
+
+cardWrapper.addEventListener('mouseleave', () => {
+    cardWrapper.style.transform = `rotateX(0deg) rotateY(0deg)`;
+});
+
+// 3. Flip Card
+function flipCard() {
+    tg.HapticFeedback.impactOccurred('medium');
+    document.getElementById('card').classList.toggle('is-flipped');
+}
+
+// 4. Response & Confetti
+function handleResponse(isKnown) {
     if (isKnown) {
-        points += 15; // To'g'ri topsa XP qo'shish
-        updateUI('success');
+        xp += 15;
+        document.getElementById('xp').innerText = xp;
+        tg.HapticFeedback.notificationOccurred('success');
+        
+        // Bayramona effekt (Confetti)
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#00f2ff', '#ff00ff', '#facc15']
+        });
     } else {
-        updateUI('warning');
+        tg.HapticFeedback.notificationOccurred('warning');
     }
 
-    // Keyingi indeksga o'tish
-    currentIndex = (currentIndex + 1) % words.length;
-    
-    // Kartani asliga (front) qaytarish
+    // Keyingi so'zga o'tish animatsiyasi
+    idx = (idx + 1) % words.length;
     const card = document.getElementById('card');
     card.classList.remove('is-flipped');
 
-    // So'zni biroz kechikish bilan yangilash (karta aylanayotganda o'zgarmasligi uchun)
     setTimeout(() => {
-        document.getElementById('word').innerText = words[currentIndex].en;
-        document.getElementById('translation').innerText = words[currentIndex].uz;
-        document.querySelector('.level').innerText = `Lesson 1: ${currentIndex + 1}/${words.length}`;
-    }, 250);
+        document.getElementById('word').innerText = words[idx].en;
+        document.getElementById('translation').innerText = words[idx].uz;
+    }, 200);
 }
-
-// Interfeysni yangilash
-function updateUI(status) {
-    // Muvaffaqiyatli yoki ogohlantiruvchi titrash
-    tg.HapticFeedback.notificationOccurred(status); 
-    
-    // Tasodifiy motivatsiya matnini chiqarish
-    const quote = quotes[Math.floor(Math.random() * quotes.length)];
-    const motivationEl = document.getElementById('motivation');
-    if (motivationEl) {
-        motivationEl.innerText = quote;
-        // Animatsiya qo'shish
-        motivationEl.classList.remove('fade-in');
-        void motivationEl.offsetWidth; // Reflow
-        motivationEl.classList.add('fade-in');
-    }
-
-    // XP ni yangilash
-    const xpEl = document.getElementById('xp');
-    if (xpEl) xpEl.innerText = points;
-}
-
-// Pastki navigatsiya tugmalari uchun interaktivlik
-document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', function() {
-        document.querySelector('.nav-item.active').classList.remove('active');
-        this.classList.add('active');
-        tg.HapticFeedback.impactOccurred('light');
-    });
-});
-
-// Ilovani boshlang'ich holatga keltirish
-window.onload = () => {
-    document.getElementById('word').innerText = words[0].en;
-    document.getElementById('translation').innerText = words[0].uz;
-    document.getElementById('xp').innerText = points;
-};
